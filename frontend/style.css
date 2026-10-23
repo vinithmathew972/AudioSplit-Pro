@@ -5,8 +5,8 @@
 
 :root {
   /* Dark Navy & Obsidian Base */
-  --bg-dark: #070913;
-  --bg-navy: #0d1224;
+  --bg-dark: #0cf5e1;
+  --bg-navy: #020305;
   --bg-surface: #11172e;
   --bg-surface-elevated: #161e38;
 
@@ -1737,97 +1737,4 @@ body {
   .dropzone {
     padding: 2.5rem 1rem;
   }
-}
-/* AudioSplit Pro - Light Blue & Black Theme */
-
-:root {
-    --bg-primary: #080b12;
-    --bg-secondary: #101722;
-    --card-bg: #151f2d;
-    --accent-primary: #38bdf8;
-    --accent-secondary: #7dd3fc;
-    --text-primary: #f8fafc;
-    --text-secondary: #b8c7d9;
-    --border-color: rgba(125, 211, 252, 0.25);
-}
-
-/* Main background */
-body {
-    background: linear-gradient(
-        135deg,
-        #05080e,
-        #0c1420,
-        #101d2b
-    );
-    color: var(--text-primary);
-}
-
-/* Header */
-.site-header {
-    background: rgba(5, 8, 14, 0.96);
-    border-bottom: 1px solid var(--border-color);
-}
-
-/* Main heading */
-.gradient-text {
-    background: linear-gradient(
-        90deg,
-        #7dd3fc,
-        #38bdf8,
-        #bae6fd
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-/* Cards */
-.card,
-.upload-card,
-.upload-section {
-    background: linear-gradient(
-        145deg,
-        #111a27,
-        #182536
-    );
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-}
-
-/* Upload area */
-.dropzone {
-    background: rgba(56, 189, 248, 0.06);
-    border: 1px dashed #38bdf8;
-    border-radius: 18px;
-}
-
-/* Buttons */
-button,
-.btn {
-    transition: all 0.25s ease;
-}
-
-button:hover,
-.btn:hover {
-    filter: brightness(1.15);
-}
-
-/* Secondary text */
-.hero-description {
-    color: var(--text-secondary);
-}
-
-/* Interactive highlights */
-button:focus-visible,
-.btn:focus-visible {
-    outline: 2px solid #7dd3fc;
-    outline-offset: 3px;
-}
-
-/* Smooth transitions */
-.card,
-.dropzone,
-.site-header {
-    transition: background-color 0.25s ease,
-                border-color 0.25s ease;
 }
