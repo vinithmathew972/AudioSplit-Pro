@@ -3,1149 +3,796 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AudioSplit Pro | Studio-Grade Audio Splitting Application</title>
-  <meta name="description" content="Split long audio recordings into precise, high-fidelity segments in seconds. Fast, lossless, and professional audio processing powered by FFmpeg.">
-  <meta name="theme-color" content="#080B16">
+  <title>AudioSplit Pro | Studio Audio Workstation</title>
+  <meta name="description" content="Professional audio workstation for high-speed, lossless audio splitting. Built for audio editors, podcast studios, and media teams.">
+  <meta name="theme-color" content="#0B0E14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Ambient Atmospheric Backlight Orbs -->
-  <div class="ambient-glow ambient-glow-1" aria-hidden="true"></div>
-  <div class="ambient-glow ambient-glow-2" aria-hidden="true"></div>
-  <div class="ambient-glow ambient-glow-3" aria-hidden="true"></div>
+  <div class="workstation-app">
 
-  <!-- Header / Navigation -->
-  <header class="site-header" id="top">
-    <div class="container header-container">
-      <a href="#top" class="brand-logo" aria-label="AudioSplit Pro Home">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 10v4" />
-            <path d="M6 6v12" />
-            <path d="M10 3v18" />
-            <path d="M14 7v10" />
-            <path d="M18 5v14" />
-            <path d="M22 10v4" />
+    <!-- Top Workstation Header Bar -->
+    <header class="app-top-header" id="top">
+      <!-- Left: Logo & Current Project File Name -->
+      <div class="header-left">
+        <a href="#top" class="brand-logo" aria-label="AudioSplit Pro Workstation">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 10v4" />
+              <path d="M6 6v12" />
+              <path d="M10 3v18" />
+              <path d="M14 7v10" />
+              <path d="M18 5v14" />
+              <path d="M22 10v4" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title-row">
+              <span class="brand-name">AudioSplit</span>
+              <span class="brand-pro">PRO</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="project-header-chip" id="projectHeaderChip">
+          <span class="chip-label font-mono">SESSION:</span>
+          <span class="chip-name font-mono truncate" id="currentProjectBadge">Untitled Session</span>
+        </div>
+      </div>
+
+      <!-- Center: Engine & Session Status Indicators -->
+      <div class="header-center">
+        <div class="engine-status-pill">
+          <span class="status-pulse-green"></span>
+          <span>FFmpeg Engine Active</span>
+          <span class="engine-badge font-mono">v7.0</span>
+        </div>
+        <div class="session-status-pill font-mono" id="sessionStatusPill">Ready</div>
+      </div>
+
+      <!-- Right: Help Button, Responsive Nav Drawer, and Client Profile -->
+      <div class="header-right">
+        <button type="button" class="btn-icon-square" id="helpBtn" title="Keyboard Shortcuts & User Guide" aria-label="Help & Guide">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-        </div>
-        <div class="brand-text">
-          <div class="brand-title-row">
-            <span class="brand-name">AudioSplit</span>
-            <span class="brand-pro">PRO</span>
+        </button>
+
+        <!-- Retain navToggle and navMenu for script.js compatibility -->
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-list">
+            <li><a href="#studio" class="nav-link active" data-view="studio">Studio</a></li>
+            <li><a href="#projects" class="nav-link" data-view="projects">Projects</a></li>
+            <li><a href="#history" class="nav-link" data-view="history">History</a></li>
+            <li><a href="#formats" class="nav-link" data-view="formats">Formats</a></li>
+            <li><a href="#settings" class="nav-link" data-view="settings">Settings</a></li>
+          </ul>
+          <div class="nav-cta">
+            <a href="#splitter" class="btn btn-sm btn-nav">Workspace</a>
           </div>
-          <span class="brand-status"><span class="status-pulse"></span>FFmpeg Engine Active</span>
-        </div>
-      </a>
+        </nav>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-
-      <nav class="nav-menu" id="navMenu">
-        <ul class="nav-list">
-          <li><a href="#top" class="nav-link active">Home</a></li>
-          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-          <li><a href="#workflows" class="nav-link">Workflows</a></li>
-          <li><a href="#supported-formats" class="nav-link">Supported Formats</a></li>
-        </ul>
-        <div class="nav-cta">
-          <a href="#splitter" class="btn btn-sm btn-nav">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            Start Splitting
-          </a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <!-- Beautiful Hero Section -->
-    <section class="hero-section">
-      <div class="container hero-container">
-        <!-- Client Personalized Greeting Pill -->
-        <div class="client-greeting-wrapper">
-          <div class="client-greeting-pill">
-            <span class="client-sparkle">✨</span>
-            <span class="client-greeting-text">Welcome, Mrs. Julie!</span>
-            <span class="greeting-divider"></span>
-            <span class="greeting-sub">Studio Session Ready</span>
+        <!-- Client User Profile Section -->
+        <div class="user-profile-badge">
+          <div class="avatar-ring">J</div>
+          <div class="user-info">
+            <span class="user-name">Welcome, Mrs. Julie!</span>
+            <span class="user-role font-mono">Audio Producer</span>
           </div>
         </div>
-
-        <h1 class="hero-title">
-          Your Audio.<br>
-          <span class="gradient-text">Perfectly Split.</span>
-        </h1>
-
-        <p class="hero-description">
-          Transform long recordings into perfectly organized audio segments.
-          Fast processing, simple downloads, and professional results — all in one place.
-        </p>
-
-        <!-- Hero Actions -->
-        <div class="hero-actions">
-          <a href="#splitter" class="btn btn-primary btn-lg shadow-glow hero-cta-btn">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
-              <circle cx="6" cy="6" r="3"></circle>
-              <circle cx="6" cy="18" r="3"></circle>
-              <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
-              <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
-              <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
-            </svg>
-            Start Splitting
-          </a>
-          <a href="#how-it-works" class="btn btn-outline btn-lg hero-secondary-btn">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            Explore How It Works
-          </a>
-        </div>
-
-        <!-- Rich Hero Visual Component: Animated Studio DAW Mockup with Floating Elements -->
-        <div class="hero-visual-wrapper">
-          <!-- Concentric Soundwave Rings -->
-          <div class="soundwave-rings" aria-hidden="true">
-            <div class="soundwave-ring ring-1"></div>
-            <div class="soundwave-ring ring-2"></div>
-            <div class="soundwave-ring ring-3"></div>
-          </div>
-
-          <!-- Floating Badges Orbiting the Hero Visual -->
-          <div class="floating-badge-container" aria-hidden="true">
-            <div class="float-badge float-badge-left float-badge-mp3">
-              <div class="float-badge-icon mp3-icon">MP3</div>
-              <div class="float-badge-text">
-                <span class="float-badge-title">320 kbps Stream</span>
-                <span class="float-badge-sub">Lossless Demux</span>
-              </div>
-            </div>
-
-            <div class="float-badge float-badge-right float-badge-wav">
-              <div class="float-badge-icon wav-icon">WAV</div>
-              <div class="float-badge-text">
-                <span class="float-badge-title">24-bit 48kHz PCM</span>
-                <span class="float-badge-sub">Sample Accurate</span>
-              </div>
-            </div>
-
-            <div class="float-badge float-badge-bottom-left float-badge-mp4">
-              <div class="float-badge-icon mp4-icon">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
-              </div>
-              <div class="float-badge-text">
-                <span class="float-badge-title">MP4 Demuxing</span>
-                <span class="float-badge-sub">Audio Isolated</span>
-              </div>
-            </div>
-
-            <div class="float-badge float-badge-bottom-right float-badge-speed">
-              <div class="float-badge-icon speed-icon">⚡</div>
-              <div class="float-badge-text">
-                <span class="float-badge-title">Sub-Second Split</span>
-                <span class="float-badge-sub">Multi-Core FFmpeg</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Main Studio DAW Audio Workstation Visual Card -->
-          <div class="hero-daw-card">
-            <div class="daw-window-bar">
-              <div class="daw-window-controls">
-                <span class="window-dot dot-red"></span>
-                <span class="window-dot dot-yellow"></span>
-                <span class="window-dot dot-green"></span>
-              </div>
-              <div class="daw-window-title font-mono">
-                <span class="status-pulse-sm"></span>
-                Julie_Podcast_Master_2026.wav [48,000 Hz &bull; Stereo &bull; 01:30:00]
-              </div>
-              <div class="daw-window-badges">
-                <span class="daw-badge-tag">Stream Copy Active</span>
-              </div>
-            </div>
-
-            <div class="daw-body">
-              <!-- Timeline Timecode Header -->
-              <div class="daw-timeline-header font-mono">
-                <span>00:00</span>
-                <span>15:00</span>
-                <span>30:00 [Cut 1]</span>
-                <span>45:00</span>
-                <span>60:00 [Cut 2]</span>
-                <span>75:00</span>
-                <span>90:00 [Cut 3]</span>
-              </div>
-
-              <!-- Interactive Waveform Visualizer Track with Split Markers -->
-              <div class="daw-track-container">
-                <div class="daw-track-segment segment-1">
-                  <div class="segment-label font-mono">Part 01 (30m)</div>
-                  <div class="equalizer-bars">
-                    <span style="height: 40%"></span>
-                    <span style="height: 65%"></span>
-                    <span style="height: 90%"></span>
-                    <span style="height: 50%"></span>
-                    <span style="height: 75%"></span>
-                    <span style="height: 100%"></span>
-                    <span style="height: 60%"></span>
-                    <span style="height: 85%"></span>
-                    <span style="height: 45%"></span>
-                    <span style="height: 70%"></span>
-                  </div>
-                </div>
-
-                <div class="daw-cut-marker marker-1">
-                  <div class="cut-line"></div>
-                  <div class="cut-badge font-mono">SPLIT 01</div>
-                </div>
-
-                <div class="daw-track-segment segment-2">
-                  <div class="segment-label font-mono">Part 02 (30m)</div>
-                  <div class="equalizer-bars">
-                    <span style="height: 55%"></span>
-                    <span style="height: 80%"></span>
-                    <span style="height: 40%"></span>
-                    <span style="height: 95%"></span>
-                    <span style="height: 70%"></span>
-                    <span style="height: 85%"></span>
-                    <span style="height: 60%"></span>
-                    <span style="height: 90%"></span>
-                    <span style="height: 75%"></span>
-                    <span style="height: 50%"></span>
-                  </div>
-                </div>
-
-                <div class="daw-cut-marker marker-2">
-                  <div class="cut-line"></div>
-                  <div class="cut-badge font-mono">SPLIT 02</div>
-                </div>
-
-                <div class="daw-track-segment segment-3">
-                  <div class="segment-label font-mono">Part 03 (30m)</div>
-                  <div class="equalizer-bars">
-                    <span style="height: 65%"></span>
-                    <span style="height: 90%"></span>
-                    <span style="height: 45%"></span>
-                    <span style="height: 75%"></span>
-                    <span style="height: 100%"></span>
-                    <span style="height: 70%"></span>
-                    <span style="height: 80%"></span>
-                    <span style="height: 55%"></span>
-                    <span style="height: 85%"></span>
-                    <span style="height: 40%"></span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- DAW Bottom Controls Preview -->
-              <div class="daw-footer-strip">
-                <div class="daw-playback-indicator">
-                  <span class="playback-icon">&#9654;</span>
-                  <span class="font-mono text-cyan">Master Output: 3 Clean Segments Ready</span>
-                </div>
-                <div class="daw-stats-pills">
-                  <span class="daw-pill">Bit-Perfect PCM</span>
-                  <span class="daw-pill">Zero Re-Encoding</span>
-                  <span class="daw-pill font-mono">1.2 GB &rarr; Split In 1.8s</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </section>
+    </header>
 
-    <!-- Main Workspace / Splitter Dashboard -->
-    <section class="splitter-section" id="splitter">
-      <div class="container app-container">
-
-        <!-- Global Error Alert Container -->
-        <div class="alert alert-danger hidden" id="globalErrorAlert" role="alert">
-          <div class="alert-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-          </div>
-          <div class="alert-content">
-            <h4 class="alert-title" id="errorTitle">Action Error</h4>
-            <p class="alert-message" id="errorMessage">Something went wrong.</p>
-          </div>
-          <button class="alert-close" id="errorCloseBtn" aria-label="Dismiss error">×</button>
-        </div>
-
-        <!-- Step 1: Upload Card -->
-        <div class="card app-card" id="uploadCard">
-          <div class="card-header">
-            <div class="step-indicator">
-              <div class="step-badge">
-                <span class="step-number">01</span>
-              </div>
-              <div>
-                <h2 class="card-title">Upload Audio Recording</h2>
-                <p class="card-subtitle">Select or drag your audio or video file for instant FFprobe inspection and stream analysis.</p>
-              </div>
-            </div>
-            <div class="header-badges">
-              <span class="badge badge-tech">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                Max 500 MB
-              </span>
-            </div>
-          </div>
-
-          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Audio file upload dropzone">
-            <input type="file" id="audioFileInput" class="file-input-hidden" accept=".mp3,.wav,.m4a,.aac,.flac,.ogg,.mp4,.mpeg,.mpg,audio/*,video/mp4" />
-            
-            <div class="dropzone-content">
-              <!-- Upload Icon with Concentric Orbiting Rings & Soundwaves -->
-              <div class="upload-art-wrapper">
-                <div class="upload-halo"></div>
-                <div class="upload-ring upload-ring-outer"></div>
-                <div class="upload-ring upload-ring-inner"></div>
-                <div class="upload-center-sphere">
-                  <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Animated Soundwave Preview directly under Upload Art -->
-              <div class="dropzone-waveform-preview" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-              </div>
-
-              <h3 class="dropzone-title">Drop your audio or video here</h3>
-              <p class="dropzone-text">Direct streaming from disk &bull; Multi-gigabit FFmpeg demuxing engine</p>
-              
-              <button type="button" class="btn btn-primary btn-upload" id="browseBtn">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
-                or browse files
-              </button>
-
-              <div class="format-badges-container">
-                <span class="format-badges-label">Supported Audio &amp; Video Formats:</span>
-                <div class="format-badges">
-                  <span class="format-pill">MP3</span>
-                  <span class="format-pill">WAV</span>
-                  <span class="format-pill">M4A</span>
-                  <span class="format-pill">AAC</span>
-                  <span class="format-pill">FLAC</span>
-                  <span class="format-pill">OGG</span>
-                  <span class="format-pill pill-special">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                      <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                      <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                    </svg>
-                    MP4 (Audio Track)
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Upload In-Progress State -->
-          <div class="upload-progress-container hidden" id="uploadProgressContainer">
-            <div class="upload-progress-header">
-              <div class="upload-file-info">
-                <div class="upload-pulse-icon"></div>
-                <span class="upload-file-name truncate" id="uploadingFileName">Uploading recording...</span>
-              </div>
-              <span class="upload-percentage font-mono" id="uploadPercentage">0%</span>
-            </div>
-            <div class="progress-bar-bg">
-              <div class="progress-bar-fill" id="uploadProgressFill" style="width: 0%"></div>
-            </div>
-            <div class="upload-status-footer">
-              <p class="upload-status-subtext" id="uploadStatusSubtext">Streaming directly to server storage...</p>
-              <span class="upload-security-badge">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-                Direct Chunked Stream
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2: Audio Information & Split Settings Card -->
-        <div class="card app-card hidden" id="settingsCard">
-          <div class="card-header">
-            <div class="step-indicator">
-              <div class="step-badge">
-                <span class="step-number">02</span>
-              </div>
-              <div>
-                <h2 class="card-title">Audio Profile &amp; Split Settings</h2>
-                <p class="card-subtitle">Verified audio stream parameters and target duration interval.</p>
-              </div>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline btn-icon-text" id="resetFileBtn" title="Choose a different file">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                <path d="M3 3v5h5"></path>
+    <!-- Application Body with Sidebar and Main Workstation Viewport -->
+    <div class="app-body">
+      <!-- Left Navigation Sidebar -->
+      <aside class="app-sidebar">
+        <div class="sidebar-section">
+          <span class="sidebar-label font-mono">WORKSTATION</span>
+          <nav class="sidebar-nav">
+            <button type="button" class="sidebar-item active" data-view="studio" id="sideTabStudio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
               </svg>
-              Replace File
+              <span>Studio</span>
+              <span class="active-indicator"></span>
             </button>
-          </div>
-
-          <!-- Decorative Waveform Header Preview in Settings -->
-          <div class="settings-audio-visual-banner" aria-hidden="true">
-            <div class="settings-waveform-graphic">
-              <svg viewBox="0 0 800 50" preserveAspectRatio="none" class="waveform-svg-strip">
-                <path d="M0,25 Q20,5 40,25 T80,25 T120,40 T160,10 T200,35 T240,15 T280,45 T320,5 T360,35 T400,20 T440,40 T480,10 T520,30 T560,5 T600,45 T640,15 T680,35 T720,20 T760,40 T800,25" fill="none" stroke="url(#cyanIndigoGrad)" stroke-width="2.5" />
-                <defs>
-                  <linearGradient id="cyanIndigoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#00D9FF" />
-                    <stop offset="50%" stop-color="#38E1FF" />
-                    <stop offset="100%" stop-color="#6366F1" />
-                  </linearGradient>
-                </defs>
+            <button type="button" class="sidebar-item" data-view="projects" id="sideTabProjects">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
               </svg>
-            </div>
-            <div class="settings-stream-status font-mono">
-              <span class="status-pulse-sm"></span> Stream Analysis Verified by FFprobe
-            </div>
-          </div>
-
-          <!-- Verified Audio DAW Inspector Grid -->
-          <div class="audio-meta-grid">
-            <div class="meta-box meta-primary">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 18V5l12-2v13"></path>
-                  <circle cx="6" cy="18" r="3"></circle>
-                  <circle cx="18" cy="16" r="3"></circle>
-                </svg>
-                Track Name
-              </div>
-              <div class="meta-value truncate font-mono" id="metaFilename">-</div>
-            </div>
-            <div class="meta-box meta-duration-box">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                Total Duration
-              </div>
-              <div class="meta-value font-mono highlight-duration" id="metaDuration">-</div>
-            </div>
-            <div class="meta-box">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                </svg>
-                File Size
-              </div>
-              <div class="meta-value font-mono" id="metaSize">-</div>
-            </div>
-            <div class="meta-box">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                </svg>
-                Audio Codec
-              </div>
-              <div class="meta-value font-mono" id="metaCodec">-</div>
-            </div>
-            <div class="meta-box">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                </svg>
-                Sample Rate
-              </div>
-              <div class="meta-value font-mono" id="metaSampleRate">-</div>
-            </div>
-            <div class="meta-box">
-              <div class="meta-label">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-                Channels &amp; Bitrate
-              </div>
-              <div class="meta-value font-mono" id="metaChannelsBitrate">-</div>
-            </div>
-          </div>
-
-          <!-- Video Audio Extraction Notice -->
-          <div class="info-banner hidden" id="videoNotice">
-            <div class="info-banner-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-              </svg>
-            </div>
-            <div class="info-banner-text">
-              <strong>MP4 Video Detected:</strong> The audio stream will be cleanly extracted with no black-screen video frames or blank video tracks.
-            </div>
-          </div>
-
-          <!-- Split Duration Selection (Mixer Presets) -->
-          <div class="split-controls-container">
-            <div class="split-controls-header">
-              <div>
-                <label class="control-label">Desired Segment Duration</label>
-                <p class="control-hint">Select a studio preset or configure a custom time interval</p>
-              </div>
-              <span class="control-status-tag">Stream-Copy Optimized</span>
-            </div>
-            
-            <div class="duration-presets" role="radiogroup" aria-label="Split duration presets">
-              <button type="button" class="preset-btn" data-minutes="5" role="radio" aria-checked="false">
-                <span class="preset-min">5</span>
-                <span class="preset-unit">min</span>
-              </button>
-              <button type="button" class="preset-btn" data-minutes="10" role="radio" aria-checked="false">
-                <span class="preset-min">10</span>
-                <span class="preset-unit">min</span>
-              </button>
-              <button type="button" class="preset-btn" data-minutes="15" role="radio" aria-checked="false">
-                <span class="preset-min">15</span>
-                <span class="preset-unit">min</span>
-              </button>
-              <button type="button" class="preset-btn" data-minutes="20" role="radio" aria-checked="false">
-                <span class="preset-min">20</span>
-                <span class="preset-unit">min</span>
-              </button>
-              <button type="button" class="preset-btn active" data-minutes="30" role="radio" aria-checked="true">
-                <span class="preset-min">30</span>
-                <span class="preset-unit">min</span>
-              </button>
-              <button type="button" class="preset-btn" data-minutes="custom" role="radio" aria-checked="false">
-                <span class="preset-min">Custom</span>
-                <span class="preset-unit">time</span>
-              </button>
-            </div>
-
-            <!-- Custom Duration Input Box -->
-            <div class="custom-duration-box hidden" id="customDurationBox">
-              <div class="custom-duration-header">
-                <label for="customMinutesInput" class="custom-label">Custom Duration in Minutes:</label>
-                <span class="custom-range-info">Allowed: 0.05 to 1440 minutes</span>
-              </div>
-              <div class="custom-input-wrapper">
-                <input 
-                  type="number" 
-                  id="customMinutesInput" 
-                  class="custom-input" 
-                  placeholder="e.g. 45" 
-                  min="0.1" 
-                  max="1440" 
-                  step="0.5" 
-                  value="45"
-                />
-                <span class="custom-input-suffix font-mono">minutes</span>
-              </div>
-              <p class="custom-hint">Enter any positive number of minutes for custom audio segment lengths.</p>
-            </div>
-
-            <!-- Dynamic Segment Estimator Banner -->
-            <div class="estimation-card">
-              <div class="estimation-icon">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="4" y1="21" x2="4" y2="14"></line>
-                  <line x1="4" y1="10" x2="4" y2="3"></line>
-                  <line x1="12" y1="21" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12" y2="3"></line>
-                  <line x1="20" y1="21" x2="20" y2="16"></line>
-                  <line x1="20" y1="12" x2="20" y2="3"></line>
-                  <line x1="1" y1="14" x2="7" y2="14"></line>
-                  <line x1="9" y1="8" x2="15" y2="8"></line>
-                  <line x1="17" y1="16" x2="23" y2="16"></line>
-                </svg>
-              </div>
-              <div class="estimation-details">
-                <div class="estimation-headline">
-                  Estimated Output: <strong id="estSegmentsCount" class="highlight-badge">-- Segments</strong>
-                </div>
-                <div class="estimation-subtext" id="estSegmentsDetails">
-                  Upload an audio file to view estimated segments.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Main Split Action Button -->
-          <div class="card-footer">
-            <button type="button" class="btn btn-primary btn-lg btn-block shadow-glow" id="startSplitBtn">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2">
-                <circle cx="6" cy="6" r="3"></circle>
-                <circle cx="6" cy="18" r="3"></circle>
-                <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
-                <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
-                <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
-              </svg>
-              START SPLITTING RECORDING
+              <span>Recent Projects</span>
             </button>
-          </div>
+            <button type="button" class="sidebar-item" data-view="history" id="sideTabHistory">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Audio History</span>
+            </button>
+          </nav>
         </div>
 
-        <!-- Step 3: Processing State Card -->
-        <div class="card app-card hidden" id="processingCard">
-          <div class="processing-content">
-            <div class="processing-spinner-wrapper">
-              <div class="spinner-pulse"></div>
-              <div class="spinner-ring"></div>
-              <div class="spinner-center-icon">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M12 2v4"></path>
-                  <path d="M12 18v4"></path>
-                  <path d="M4.93 4.93l2.83 2.83"></path>
-                  <path d="M16.24 16.24l2.83 2.83"></path>
-                  <path d="M2 12h4"></path>
-                  <path d="M18 12h4"></path>
-                  <path d="M4.93 19.07l2.83-2.83"></path>
-                  <path d="M16.24 7.76l2.83-2.83"></path>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Animated Sound Equalizer directly under Spinner -->
-            <div class="processing-live-equalizer" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-
-            <h3 class="processing-title" id="processingStatusTitle">Splitting Audio Recording</h3>
-            <p class="processing-message" id="processingStatusMessage">Starting background processing...</p>
-
-            <div class="progress-container">
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill progress-glow" id="jobProgressFill" style="width: 5%"></div>
-              </div>
-              <div class="progress-stats font-mono">
-                <span class="progress-segments" id="jobSegmentCounter">Preparing segments...</span>
-                <span class="progress-percent" id="jobProgressPercent">5%</span>
-              </div>
-            </div>
-
-            <div class="processing-badge-row">
-              <div class="processing-badge">
-                <span class="status-pulse"></span>
-                Multi-threaded FFmpeg engine active
-              </div>
-              <div class="processing-badge">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                </svg>
-                Bit-accurate stream copy
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4: Results Section Card -->
-        <div class="card app-card hidden" id="resultsCard">
-          <div class="card-header results-header">
-            <div class="success-header-wrapper">
-              <div class="success-icon-badge">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <div>
-                <h2 class="card-title">Your Audio Is Ready!</h2>
-                <p class="card-subtitle" id="resultsSubtitle">Successfully split into high-quality audio segments.</p>
-              </div>
-            </div>
-            <div class="results-top-actions">
-              <button type="button" class="btn btn-outline btn-sm btn-icon-text" id="splitAnotherBtn">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                  <path d="M3 3v5h5"></path>
-                </svg>
-                Split Another Audio
-              </button>
-            </div>
-          </div>
-
-          <!-- Download All ZIP Banner -->
-          <div class="zip-download-banner">
-            <div class="zip-info">
-              <div class="zip-icon">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-              </div>
-              <div>
-                <h4 class="zip-title">Download All as ZIP Archive</h4>
-                <p class="zip-sub" id="zipSizeDisplay">Includes all audio parts</p>
-              </div>
-            </div>
-            <a href="#" class="btn btn-primary btn-lg shadow-glow btn-icon-text" id="downloadZipBtn" download>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              DOWNLOAD ALL AS ZIP
-            </a>
-          </div>
-
-          <!-- Segments List Table / Grid -->
-          <div class="segments-container">
-            <div class="segments-list-header">
-              <div>
-                <h3 class="segments-list-title">Generated Audio Parts</h3>
-                <span class="segments-hint">Download individual segments or stream directly</span>
-              </div>
-              <span class="segments-badge">Sample Accurate</span>
-            </div>
-            <div class="segments-list" id="segmentsList">
-              <!-- Dynamically populated rows by script.js -->
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Asymmetric Bento Section: Everything You Need for Better Audio Workflows -->
-    <section class="info-section workflows-section" id="workflows">
-      <div class="container">
-        <div class="section-header text-center">
-          <span class="badge badge-accent">Studio Capabilities</span>
-          <h2 class="section-title">Everything You Need for Better Audio Workflows</h2>
-          <p class="section-description">Engineered for podcast editors, voiceover studios, webinar hosts, and conference transcribers.</p>
-        </div>
-
-        <div class="bento-grid">
-          <!-- Featured Large Card: Precision Audio Splitting -->
-          <div class="bento-card bento-card-large">
-            <div class="bento-card-header">
-              <div class="bento-icon-wrapper large-icon-wrapper">
-                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <circle cx="6" cy="6" r="3"></circle>
-                  <circle cx="6" cy="18" r="3"></circle>
-                  <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
-                  <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
-                  <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
-                </svg>
-              </div>
-              <span class="bento-tag">Featured Capability</span>
-            </div>
-
-            <div class="bento-card-body">
-              <h3 class="bento-title">Precision Audio Splitting</h3>
-              <p class="bento-desc">
-                Split recordings with sample-accurate timestamp boundaries.
-                Unlike basic browser processors that decode and recompress audio,
-                AudioSplit Pro utilizes direct FFmpeg stream packet slicing to preserve the
-                original acoustic bitstream and bitrate.
-              </p>
-
-              <!-- Mini Waveform Graphic with Cut Points Inside Bento Card -->
-              <div class="bento-waveform-graphic" aria-hidden="true">
-                <div class="bento-wave-segment seg-a">
-                  <span>Part 01</span>
-                </div>
-                <div class="bento-cut-point"></div>
-                <div class="bento-wave-segment seg-b">
-                  <span>Part 02</span>
-                </div>
-                <div class="bento-cut-point"></div>
-                <div class="bento-wave-segment seg-c">
-                  <span>Part 03</span>
-                </div>
-              </div>
-
-              <div class="bento-features-row">
-                <span class="bento-micro-pill">&bull; Zero Generational Loss</span>
-                <span class="bento-micro-pill">&bull; Bit-Perfect Timestamps</span>
-                <span class="bento-micro-pill">&bull; Lossless Stream-Copy</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Fast FFmpeg Processing -->
-          <div class="bento-card">
-            <div class="bento-icon-wrapper">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
-                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                <rect x="9" y="9" width="6" height="6"></rect>
-                <line x1="9" y1="1" x2="9" y2="4"></line>
-                <line x1="15" y1="1" x2="15" y2="4"></line>
-                <line x1="9" y1="20" x2="9" y2="23"></line>
-                <line x1="15" y1="20" x2="15" y2="23"></line>
-                <line x1="20" y1="9" x2="23" y2="9"></line>
-                <line x1="20" y1="14" x2="23" y2="14"></line>
-                <line x1="1" y1="9" x2="4" y2="9"></line>
-                <line x1="1" y1="14" x2="4" y2="14"></line>
-              </svg>
-            </div>
-            <h3 class="bento-title">Fast FFmpeg Processing</h3>
-            <p class="bento-desc">
-              Multi-threaded processing takes seconds rather than minutes.
-              Demuxes directly on disk avoiding browser CPU throttling.
-            </p>
-          </div>
-
-          <!-- Card 3: Individual Segment Downloads -->
-          <div class="bento-card">
-            <div class="bento-icon-wrapper">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="12" y1="18" x2="12" y2="12"></line>
-                <line x1="9" y1="15" x2="12" y2="18"></line>
-                <line x1="15" y1="15" x2="12" y2="18"></line>
-              </svg>
-            </div>
-            <h3 class="bento-title">Individual Segment Downloads</h3>
-            <p class="bento-desc">
-              Download discrete audio parts individually with clean filenames,
-              exact durations, and verified bitrates for selective sharing.
-            </p>
-          </div>
-
-          <!-- Card 4: One-Click ZIP Download -->
-          <div class="bento-card">
-            <div class="bento-icon-wrapper">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              </svg>
-            </div>
-            <h3 class="bento-title">One-Click ZIP Download</h3>
-            <p class="bento-desc">
-              Bundle all split tracks into a single compressed `.zip` archive.
-              Ready for immediate archiving, distribution, or cloud storage.
-            </p>
-          </div>
-
-          <!-- Card 5: Multiple Audio Formats -->
-          <div class="bento-card">
-            <div class="bento-icon-wrapper">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
+        <div class="sidebar-section">
+          <span class="sidebar-label font-mono">SYSTEM SPEC</span>
+          <nav class="sidebar-nav">
+            <button type="button" class="sidebar-item" data-view="formats" id="sideTabFormats">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
               </svg>
-            </div>
-            <h3 class="bento-title">Multiple Audio Formats</h3>
-            <p class="bento-desc">
-              Comprehensive support for MP3, WAV, M4A, AAC, FLAC, OGG, and MP4.
-              Automatic codec inspection matches container parameters seamlessly.
-            </p>
-          </div>
-
-          <!-- Card 6: Long Recording Support -->
-          <div class="bento-card">
-            <div class="bento-icon-wrapper">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
+              <span>Supported Formats</span>
+            </button>
+            <button type="button" class="sidebar-item" data-view="settings" id="sideTabSettings">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
               </svg>
-            </div>
-            <h3 class="bento-title">Long Recording Support</h3>
-            <p class="bento-desc">
-              Built to split multi-hour audiobooks, 3-hour university lectures,
-              and 500 MB recordings with streaming I/O that prevents memory overflow.
-            </p>
+              <span>Engine Settings</span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="sidebar-hardware-box">
+          <div class="hardware-box-header">
+            <span class="hardware-label font-mono">STREAM PROFILE</span>
+            <span class="hardware-status font-mono">ACTIVE</span>
+          </div>
+          <div class="hardware-details font-mono">
+            <div>Limit: 500 MB</div>
+            <div>Mode: -c:a copy</div>
+            <div>Purge: 1-Hr Auto</div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- How It Works Section with Glowing Timeline -->
-    <section class="info-section workflow-section" id="how-it-works">
-      <div class="container">
-        <div class="section-header text-center">
-          <span class="badge badge-accent">3-Step Pipeline</span>
-          <h2 class="section-title">How It Works</h2>
-          <p class="section-description">A streamlined workflow designed to get you from raw recording to divided segments in seconds.</p>
+        <div class="sidebar-bottom font-mono">
+          <span>AudioSplit Pro v2.4</span>
+          <span id="currentYear">2026</span>
         </div>
+      </aside>
 
-        <div class="workflow-timeline-wrapper">
-          <div class="timeline-glow-line" aria-hidden="true"></div>
+      <!-- Main Workstation Viewport Canvas -->
+      <main class="app-viewport">
 
-          <div class="workflow-steps-grid">
-            <!-- Step 1 -->
-            <div class="workflow-step-card">
-              <div class="step-badge-circle">
-                <span class="step-circ-num">01</span>
-              </div>
-              <div class="workflow-illustration-box">
-                <svg viewBox="0 0 80 80" class="step-svg-art">
-                  <circle cx="40" cy="40" r="36" fill="rgba(0, 217, 255, 0.08)" stroke="rgba(0, 217, 255, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" />
-                  <rect x="26" y="24" width="28" height="34" rx="4" fill="rgba(17, 26, 46, 0.9)" stroke="#00D9FF" stroke-width="1.5" />
-                  <path d="M34 38l6-6 6 6M40 32v18" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- 1. STUDIO VIEW (PRIMARY WORKSPACE - FIRST THING USER SEES) -->
+        <div class="workstation-view active" id="viewStudio">
+          <div class="studio-canvas" id="splitter">
+
+            <!-- Global Error Notification Banner -->
+            <div class="alert alert-danger hidden" id="globalErrorAlert" role="alert">
+              <div class="alert-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
                 </svg>
               </div>
-              <h3 class="workflow-step-title">Upload Your File</h3>
-              <p class="workflow-step-desc">
-                Drag and drop your audio or video file. The system streams it to storage and runs FFprobe to inspect format, sample rate, and duration.
-              </p>
+              <div class="alert-content">
+                <h4 class="alert-title font-mono" id="errorTitle">Action Error</h4>
+                <p class="alert-message" id="errorMessage">Something went wrong.</p>
+              </div>
+              <button class="alert-close" id="errorCloseBtn" aria-label="Dismiss error">×</button>
             </div>
 
-            <!-- Step 2 -->
-            <div class="workflow-step-card">
-              <div class="step-badge-circle">
-                <span class="step-circ-num">02</span>
+            <!-- STEP 1: Compact, Impressive Audio Import Deck (uploadCard) -->
+            <div class="daw-panel card app-card" id="uploadCard">
+              <div class="daw-panel-bar">
+                <div class="panel-bar-left">
+                  <span class="panel-step-badge font-mono">01</span>
+                  <div class="panel-bar-text">
+                    <h2 class="panel-title card-title">Audio Import &amp; Inspection Deck</h2>
+                    <p class="panel-subtitle card-subtitle">Select or drag your audio or video file for instant FFprobe analysis</p>
+                  </div>
+                </div>
+                <div class="panel-bar-right header-badges">
+                  <span class="spec-pill font-mono badge badge-tech">Max 500 MB Stream</span>
+                </div>
               </div>
-              <div class="workflow-illustration-box">
-                <svg viewBox="0 0 80 80" class="step-svg-art">
-                  <circle cx="40" cy="40" r="36" fill="rgba(99, 102, 241, 0.08)" stroke="rgba(99, 102, 241, 0.3)" stroke-width="1.5" />
-                  <circle cx="40" cy="40" r="22" fill="none" stroke="#6366F1" stroke-width="1.5" />
-                  <line x1="40" y1="26" x2="40" y2="40" stroke="#00D9FF" stroke-width="2.5" stroke-linecap="round" />
-                  <line x1="40" y1="40" x2="50" y2="40" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round" />
-                  <circle cx="40" cy="40" r="3" fill="#00D9FF" />
-                </svg>
+
+              <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Audio file upload dropzone">
+                <input type="file" id="audioFileInput" class="file-input-hidden" accept=".mp3,.wav,.m4a,.aac,.flac,.ogg,.mp4,.mpeg,.mpg,audio/*,video/mp4" />
+                
+                <div class="dropzone-content">
+                  <div class="upload-icon-graphic">
+                    <div class="icon-ring-outer"></div>
+                    <div class="icon-ring-inner"></div>
+                    <div class="icon-core">
+                      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <h3 class="dropzone-title">Drag and drop audio or video file</h3>
+                  <p class="dropzone-text">Direct streaming from disk &bull; Multi-gigabit FFmpeg demuxing engine</p>
+
+                  <button type="button" class="btn btn-primary btn-upload" id="browseBtn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Browse Local Audio Files
+                  </button>
+
+                  <div class="format-badges-wrapper">
+                    <span class="format-label font-mono">SUPPORTED FORMATS:</span>
+                    <div class="format-badges">
+                      <span class="format-pill font-mono">.MP3</span>
+                      <span class="format-pill font-mono">.WAV</span>
+                      <span class="format-pill font-mono">.M4A</span>
+                      <span class="format-pill font-mono">.AAC</span>
+                      <span class="format-pill font-mono">.FLAC</span>
+                      <span class="format-pill font-mono">.OGG</span>
+                      <span class="format-pill pill-special font-mono">.MP4 (Audio Track)</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h3 class="workflow-step-title">Choose Segment Duration</h3>
-              <p class="workflow-step-desc">
-                Pick a studio preset (5, 10, 15, 20, 30 min) or enter custom minutes. Review dynamic segment estimates before initiating the split.
-              </p>
+
+              <!-- Upload Progress Container -->
+              <div class="upload-progress-container hidden" id="uploadProgressContainer">
+                <div class="upload-progress-header">
+                  <div class="upload-file-info">
+                    <div class="upload-pulse-icon"></div>
+                    <span class="upload-file-name truncate font-mono" id="uploadingFileName">Uploading recording...</span>
+                  </div>
+                  <span class="upload-percentage font-mono" id="uploadPercentage">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="uploadProgressFill" style="width: 0%"></div>
+                </div>
+                <div class="upload-status-footer font-mono">
+                  <p class="upload-status-subtext" id="uploadStatusSubtext">Streaming directly to server storage...</p>
+                  <span class="upload-security-badge">Direct Chunk Stream</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Step 3 -->
-            <div class="workflow-step-card">
-              <div class="step-badge-circle">
-                <span class="step-circ-num">03</span>
+            <!-- STEP 2: Loaded Audio Project Deck (settingsCard) with Live Waveform & DAW Split Controls -->
+            <div class="daw-panel card app-card hidden" id="settingsCard">
+              <div class="daw-panel-bar">
+                <div class="panel-bar-left">
+                  <span class="panel-step-badge font-mono">02</span>
+                  <div class="panel-bar-text">
+                    <h2 class="panel-title card-title">Audio Profile &amp; Waveform Station</h2>
+                    <p class="panel-subtitle card-subtitle">Verified audio stream parameters and target duration interval</p>
+                  </div>
+                </div>
+                <div class="panel-bar-right">
+                  <button type="button" class="btn btn-sm btn-outline btn-icon-text" id="resetFileBtn" title="Choose a different file">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                      <path d="M3 3v5h5"></path>
+                    </svg>
+                    Replace File
+                  </button>
+                </div>
               </div>
-              <div class="workflow-illustration-box">
-                <svg viewBox="0 0 80 80" class="step-svg-art">
-                  <circle cx="40" cy="40" r="36" fill="rgba(0, 217, 255, 0.08)" stroke="rgba(0, 217, 255, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" />
-                  <path d="M26 44v8a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-8" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" />
-                  <polyline points="33 34 40 41 47 34" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-                  <line x1="40" y1="22" x2="40" y2="41" stroke="#6366F1" stroke-width="2.2" stroke-linecap="round" />
-                </svg>
+
+              <!-- Professional Waveform Workspace -->
+              <div class="daw-waveform-workstation">
+                <!-- Transport & Waveform Controls Bar -->
+                <div class="waveform-transport-strip">
+                  <div class="transport-controls">
+                    <button type="button" class="btn-transport" id="waveformPlayBtn" title="Play / Pause Audio Preview">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" id="playBtnIcon">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span id="playBtnLabel">Preview</span>
+                    </button>
+                    <div class="waveform-timecode font-mono" id="waveformTimeDisplay">00:00:00 / 00:00:00</div>
+                  </div>
+
+                  <div class="waveform-split-indicators-legend font-mono">
+                    <span class="legend-cut"><span class="legend-line"></span> Split Boundary</span>
+                    <span class="legend-channel">PCM Channel</span>
+                  </div>
+                </div>
+
+                <!-- Live HTML5 Waveform Canvas Container -->
+                <div class="waveform-canvas-container" id="waveformCanvasContainer">
+                  <canvas id="waveformCanvas" width="1100" height="130"></canvas>
+                  <div class="waveform-playhead" id="waveformPlayhead"></div>
+                  <div class="waveform-cuts-overlay" id="waveformCutsOverlay"></div>
+                </div>
+
+                <!-- Timeline Ruler Bar with Time Markers -->
+                <div class="waveform-ruler font-mono" id="waveformTimelineRuler">
+                  <span>00:00</span>
+                  <span>15:00</span>
+                  <span>30:00</span>
+                  <span>45:00</span>
+                  <span>60:00</span>
+                  <span>75:00</span>
+                  <span>90:00</span>
+                </div>
               </div>
-              <h3 class="workflow-step-title">Download Your Audio Parts</h3>
-              <p class="workflow-step-desc">
-                Download generated audio segments individually with exact timing metadata, or download everything bundled in a single ZIP archive.
-              </p>
+
+              <!-- Verified Audio DAW Inspector Grid -->
+              <div class="audio-meta-grid">
+                <div class="meta-box meta-primary">
+                  <div class="meta-label font-mono">TRACK NAME</div>
+                  <div class="meta-value truncate font-mono" id="metaFilename">-</div>
+                </div>
+                <div class="meta-box meta-duration-box">
+                  <div class="meta-label font-mono">TOTAL DURATION</div>
+                  <div class="meta-value font-mono highlight-duration" id="metaDuration">-</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label font-mono">FILE SIZE</div>
+                  <div class="meta-value font-mono" id="metaSize">-</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label font-mono">AUDIO CODEC</div>
+                  <div class="meta-value font-mono" id="metaCodec">-</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label font-mono">SAMPLE RATE</div>
+                  <div class="meta-value font-mono" id="metaSampleRate">-</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label font-mono">CHANNELS &amp; BITRATE</div>
+                  <div class="meta-value font-mono" id="metaChannelsBitrate">-</div>
+                </div>
+              </div>
+
+              <!-- MP4 Demuxing Notice -->
+              <div class="info-banner hidden" id="videoNotice">
+                <div class="info-banner-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                  </svg>
+                </div>
+                <div class="info-banner-text">
+                  <strong>MP4 Video Detected:</strong> The audio stream will be cleanly extracted with no black-screen video frames.
+                </div>
+              </div>
+
+              <!-- Splitting Control Panel -->
+              <div class="split-controls-container">
+                <div class="split-controls-header">
+                  <div>
+                    <label class="control-label">Segment Duration Interval</label>
+                    <p class="control-hint">Select a preset cut interval or specify custom minutes</p>
+                  </div>
+                  <span class="control-status-tag font-mono">Stream-Copy Optimized</span>
+                </div>
+
+                <!-- Segment Preset Selector Buttons -->
+                <div class="duration-presets" role="radiogroup" aria-label="Split duration presets">
+                  <button type="button" class="preset-btn" data-minutes="5" role="radio" aria-checked="false">
+                    <span class="preset-min font-mono">5</span>
+                    <span class="preset-unit font-mono">min</span>
+                  </button>
+                  <button type="button" class="preset-btn" data-minutes="10" role="radio" aria-checked="false">
+                    <span class="preset-min font-mono">10</span>
+                    <span class="preset-unit font-mono">min</span>
+                  </button>
+                  <button type="button" class="preset-btn" data-minutes="15" role="radio" aria-checked="false">
+                    <span class="preset-min font-mono">15</span>
+                    <span class="preset-unit font-mono">min</span>
+                  </button>
+                  <button type="button" class="preset-btn" data-minutes="20" role="radio" aria-checked="false">
+                    <span class="preset-min font-mono">20</span>
+                    <span class="preset-unit font-mono">min</span>
+                  </button>
+                  <button type="button" class="preset-btn active" data-minutes="30" role="radio" aria-checked="true">
+                    <span class="preset-min font-mono">30</span>
+                    <span class="preset-unit font-mono">min</span>
+                  </button>
+                  <button type="button" class="preset-btn" data-minutes="custom" role="radio" aria-checked="false">
+                    <span class="preset-min font-mono">Custom</span>
+                    <span class="preset-unit font-mono">time</span>
+                  </button>
+                </div>
+
+                <!-- Custom Duration Box -->
+                <div class="custom-duration-box hidden" id="customDurationBox">
+                  <div class="custom-duration-header">
+                    <label for="customMinutesInput" class="custom-label">Custom Duration in Minutes:</label>
+                    <span class="custom-range-info font-mono">0.05 to 1440 minutes</span>
+                  </div>
+                  <div class="custom-input-wrapper">
+                    <input 
+                      type="number" 
+                      id="customMinutesInput" 
+                      class="custom-input font-mono" 
+                      placeholder="e.g. 45" 
+                      min="0.1" 
+                      max="1440" 
+                      step="0.5" 
+                      value="45"
+                    />
+                    <span class="custom-input-suffix font-mono">minutes</span>
+                  </div>
+                  <p class="custom-hint">Enter desired partition interval in minutes.</p>
+                </div>
+
+                <!-- Estimation Banner -->
+                <div class="estimation-card">
+                  <div class="estimation-icon">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="4" y1="21" x2="4" y2="14"></line>
+                      <line x1="4" y1="10" x2="4" y2="3"></line>
+                      <line x1="12" y1="21" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12" y2="3"></line>
+                      <line x1="20" y1="21" x2="20" y2="16"></line>
+                      <line x1="20" y1="12" x2="20" y2="3"></line>
+                    </svg>
+                  </div>
+                  <div class="estimation-details">
+                    <div class="estimation-headline">
+                      Estimated Output: <strong id="estSegmentsCount" class="highlight-badge font-mono">-- Segments</strong>
+                    </div>
+                    <div class="estimation-subtext font-mono" id="estSegmentsDetails">
+                      Upload an audio file to view estimated segments.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Split Execution Footer -->
+              <div class="card-footer">
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="startSplitBtn">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="6" cy="6" r="3"></circle>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                    <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                  </svg>
+                  EXECUTE AUDIO SPLIT
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Processing Monitor Deck (processingCard) -->
+            <div class="daw-panel card app-card hidden" id="processingCard">
+              <div class="daw-panel-bar">
+                <div class="panel-bar-left">
+                  <span class="panel-step-badge font-mono">03</span>
+                  <div class="panel-bar-text">
+                    <h2 class="panel-title card-title" id="processingStatusTitle">Splitting Audio Recording</h2>
+                    <p class="panel-subtitle card-subtitle" id="processingStatusMessage">Starting background processing...</p>
+                  </div>
+                </div>
+                <div class="panel-bar-right font-mono text-cyan" id="jobProgressPercent">5%</div>
+              </div>
+
+              <div class="processing-console-body">
+                <div class="processing-meter-wrapper">
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="jobProgressFill" style="width: 5%"></div>
+                  </div>
+                  <div class="progress-stats font-mono">
+                    <span class="progress-segments" id="jobSegmentCounter">Preparing segments...</span>
+                    <span class="progress-details">Multi-threaded demuxing</span>
+                  </div>
+                </div>
+
+                <div class="processing-hardware-strip font-mono">
+                  <div class="proc-hw-item">
+                    <span class="hw-dot"></span>
+                    <span>CPU: Multi-Core Active</span>
+                  </div>
+                  <div class="proc-hw-item">
+                    <span>Algorithm: -c:a copy</span>
+                  </div>
+                  <div class="proc-hw-item">
+                    <span>Format: Lossless Bitstream</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 4: Output Segments Deck (resultsCard) -->
+            <div class="daw-panel card app-card hidden" id="resultsCard">
+              <div class="daw-panel-bar results-header">
+                <div class="panel-bar-left">
+                  <div class="success-icon-badge">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div class="panel-bar-text">
+                    <h2 class="panel-title card-title">Audio Splitting Complete</h2>
+                    <p class="panel-subtitle card-subtitle font-mono" id="resultsSubtitle">Successfully split into audio segments.</p>
+                  </div>
+                </div>
+                <div class="panel-bar-right results-top-actions">
+                  <button type="button" class="btn btn-outline btn-sm btn-icon-text" id="splitAnotherBtn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                      <path d="M3 3v5h5"></path>
+                    </svg>
+                    New Session / Reset
+                  </button>
+                </div>
+              </div>
+
+              <!-- ZIP Download Banner -->
+              <div class="zip-download-banner">
+                <div class="zip-info">
+                  <div class="zip-icon">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="zip-title">Download All as Unified ZIP Archive</h4>
+                    <p class="zip-sub font-mono" id="zipSizeDisplay">Includes all audio parts</p>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-primary btn-lg btn-icon-text" id="downloadZipBtn" download>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  DOWNLOAD ALL (ZIP)
+                </a>
+              </div>
+
+              <!-- Individual Generated Segments List -->
+              <div class="segments-container">
+                <div class="segments-list-header">
+                  <div>
+                    <h3 class="segments-list-title">Generated Audio Parts</h3>
+                    <span class="segments-hint font-mono">Sample-accurate cut segments</span>
+                  </div>
+                  <span class="segments-badge font-mono">Stream Copy Complete</span>
+                </div>
+                <div class="segments-list" id="segmentsList">
+                  <!-- Dynamically populated by script.js -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. RECENT PROJECTS VIEW (WORKSTATION TAB) -->
+        <div class="workstation-view hidden" id="viewProjects">
+          <div class="workstation-subpage">
+            <div class="subpage-header">
+              <h2 class="subpage-title">Recent Workstation Sessions</h2>
+              <p class="subpage-desc font-mono">Sessions processed in this environment</p>
+            </div>
+
+            <div class="sessions-table-wrapper">
+              <table class="daw-table font-mono">
+                <thead>
+                  <tr>
+                    <th>TRACK / PROJECT</th>
+                    <th>DURATION</th>
+                    <th>INTERVAL</th>
+                    <th>PARTS</th>
+                    <th>CODEC</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="projectsTableBody">
+                  <tr>
+                    <td class="text-white">Julie_Podcast_Episode_Master.wav</td>
+                    <td>01:30:00</td>
+                    <td>30 min</td>
+                    <td>3 Parts</td>
+                    <td>PCM 24-bit</td>
+                    <td><span class="table-badge-ok">PROCESSED</span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-white">Keynote_Lecture_Audio_Track.mp4</td>
+                    <td>00:45:12</td>
+                    <td>15 min</td>
+                    <td>3 Parts</td>
+                    <td>AAC 256k</td>
+                    <td><span class="table-badge-ok">PROCESSED</span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-white">Interview_Archive_Session_04.mp3</td>
+                    <td>02:15:30</td>
+                    <td>30 min</td>
+                    <td>5 Parts</td>
+                    <td>MP3 320k</td>
+                    <td><span class="table-badge-ok">PROCESSED</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Supported Formats Section -->
-    <section class="info-section formats-section" id="supported-formats">
-      <div class="container">
-        <div class="section-header text-center">
-          <span class="badge badge-accent">Universal Compatibility</span>
-          <h2 class="section-title">Supported Formats</h2>
-          <p class="section-description">Native audio stream copy whenever compatible, with automatic high-fidelity transcode fallback.</p>
-        </div>
+        <!-- 3. AUDIO HISTORY VIEW (WORKSTATION TAB) -->
+        <div class="workstation-view hidden" id="viewHistory">
+          <div class="workstation-subpage">
+            <div class="subpage-header">
+              <h2 class="subpage-title">Audio Processing History</h2>
+              <p class="subpage-desc font-mono">FFmpeg execution log and session timestamps</p>
+            </div>
 
-        <div class="formats-showcase-grid">
-          <!-- MP3 -->
-          <div class="format-card-premium">
-            <div class="format-card-top">
-              <div class="format-icon-badge mp3-badge">
-                <span>MP3</span>
-              </div>
-              <span class="format-tag font-mono">.mp3</span>
-            </div>
-            <h3 class="format-name">MPEG Layer-3 Audio</h3>
-            <p class="format-description">
-              Standard audio recording format. Fast indexed stream copy preserves original bitrate with zero generational loss.
-            </p>
-            <div class="format-footer-tags">
-              <span>Streaming Fast</span>
-              <span>Bitrate Preserved</span>
-            </div>
-          </div>
-
-          <!-- WAV -->
-          <div class="format-card-premium">
-            <div class="format-card-top">
-              <div class="format-icon-badge wav-badge">
-                <span>WAV</span>
-              </div>
-              <span class="format-tag font-mono">.wav</span>
-            </div>
-            <h3 class="format-name">Waveform PCM Audio</h3>
-            <p class="format-description">
-              Uncompressed studio master format. Bit-perfect cutting with exact sample accuracy for recording and post-production.
-            </p>
-            <div class="format-footer-tags">
-              <span>Bit-Perfect</span>
-              <span>Studio Quality</span>
-            </div>
-          </div>
-
-          <!-- M4A / AAC -->
-          <div class="format-card-premium">
-            <div class="format-card-top">
-              <div class="format-icon-badge m4a-badge">
-                <span>M4A</span>
-              </div>
-              <span class="format-tag font-mono">.m4a, .aac</span>
-            </div>
-            <h3 class="format-name">Advanced Audio Coding</h3>
-            <p class="format-description">
-              Standard format for Apple Voice Memos, Podcasts, and mobile recordings. Preserves AAC bitstream without recompression.
-            </p>
-            <div class="format-footer-tags">
-              <span>Apple Voice Memos</span>
-              <span>Podcasts</span>
-            </div>
-          </div>
-
-          <!-- FLAC -->
-          <div class="format-card-premium">
-            <div class="format-card-top">
-              <div class="format-icon-badge flac-badge">
-                <span>FLAC</span>
-              </div>
-              <span class="format-tag font-mono">.flac</span>
-            </div>
-            <h3 class="format-name">Free Lossless Codec</h3>
-            <p class="format-description">
-              Audiophile-grade lossless compression. Cleanly splits FLAC albums and masters with full acoustic fidelity preserved.
-            </p>
-            <div class="format-footer-tags">
-              <span>100% Lossless</span>
-              <span>Hi-Res Audio</span>
-            </div>
-          </div>
-
-          <!-- OGG -->
-          <div class="format-card-premium">
-            <div class="format-card-top">
-              <div class="format-icon-badge ogg-badge">
-                <span>OGG</span>
-              </div>
-              <span class="format-tag font-mono">.ogg, .opus</span>
-            </div>
-            <h3 class="format-name">OGG / Opus Audio</h3>
-            <p class="format-description">
-              High-efficiency modern web audio and broadcast codec popular in game sound, voice calls, and streaming media.
-            </p>
-            <div class="format-footer-tags">
-              <span>Web Audio</span>
-              <span>Voice Optimized</span>
-            </div>
-          </div>
-
-          <!-- MP4 Video -->
-          <div class="format-card-premium format-card-featured">
-            <div class="format-card-top">
-              <div class="format-icon-badge mp4-badge">
-                <span>MP4</span>
-              </div>
-              <span class="format-tag font-mono">.mp4, video</span>
-            </div>
-            <h3 class="format-name">MP4 Audio Track Extraction</h3>
-            <p class="format-description">
-              Isolates and extracts the native audio track from webinar recordings, presentations, and video interviews with no black-screen frames.
-            </p>
-            <div class="format-footer-tags">
-              <span>Audio Extracted</span>
-              <span>No Video Overhead</span>
+            <div class="history-log-box font-mono" id="historyLogBox">
+              <div class="log-line text-cyan">[INIT] AudioSplit Pro Station Initialized &bull; FFmpeg Engine v7.0 Ready</div>
+              <div class="log-line">[SYS] Stream copy buffer allocated: 500 MB &bull; Retention timeout: 3600s</div>
+              <div class="log-line">[DAW] Awaiting audio input stream from local storage...</div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <!-- Premium Footer -->
-  <footer class="site-footer">
-    <div class="container footer-container">
-      <div class="footer-top-grid">
-        <div class="footer-brand-column">
-          <div class="footer-brand">
-            <div class="logo-icon-sm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M2 10v4" />
-                <path d="M6 6v12" />
-                <path d="M10 3v18" />
-                <path d="M14 7v10" />
-                <path d="M18 5v14" />
-                <path d="M22 10v4" />
-              </svg>
+        <!-- 4. SUPPORTED FORMATS VIEW (WORKSTATION TAB) -->
+        <div class="workstation-view hidden" id="viewFormats">
+          <div class="workstation-subpage">
+            <div class="subpage-header">
+              <h2 class="subpage-title">Supported Formats &amp; Codec Matrix</h2>
+              <p class="subpage-desc font-mono">Native stream-copy parameters and demuxing capabilities</p>
             </div>
-            <div class="footer-brand-name">
-              <span>AudioSplit</span>
-              <span class="brand-pro-footer">PRO</span>
+
+            <div class="formats-daw-grid">
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">MPEG-3 (.mp3)</span>
+                  <span class="spec-tag font-mono">STREAM COPY</span>
+                </div>
+                <p class="format-spec-desc">MPEG Layer 3. Byte-accurate frame slicing without generational compression loss.</p>
+                <div class="spec-footer font-mono">Bitrates: 64 to 320 kbps &bull; CBR / VBR</div>
+              </div>
+
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">PCM Waveform (.wav)</span>
+                  <span class="spec-tag font-mono">BIT-PERFECT</span>
+                </div>
+                <p class="format-spec-desc">Linear PCM uncompressed audio. Sample-accurate cutting with header synchronization.</p>
+                <div class="spec-footer font-mono">Sample rates: 44.1 to 192 kHz &bull; 16/24/32-bit</div>
+              </div>
+
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">AAC / M4A (.m4a)</span>
+                  <span class="spec-tag font-mono">NATIVE DEMUX</span>
+                </div>
+                <p class="format-spec-desc">Advanced Audio Coding. Standard for Apple Voice Memos and podcast recordings.</p>
+                <div class="spec-footer font-mono">MPEG-4 Audio &bull; ADTS / M4A container</div>
+              </div>
+
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">FLAC (.flac)</span>
+                  <span class="spec-tag font-mono">LOSSLESS</span>
+                </div>
+                <p class="format-spec-desc">Free Lossless Audio Codec. Audio bitstream verified and divided with MD5 check.</p>
+                <div class="spec-footer font-mono">Bit-depth: 16/24-bit &bull; Lossless</div>
+              </div>
+
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">OGG / Opus (.ogg)</span>
+                  <span class="spec-tag font-mono">VOICE OPT</span>
+                </div>
+                <p class="format-spec-desc">Modern low-latency audio codec widely used in game audio, voice, and streaming.</p>
+                <div class="spec-footer font-mono">Opus / Vorbis &bull; 6 to 510 kbps</div>
+              </div>
+
+              <div class="format-spec-card">
+                <div class="format-spec-head">
+                  <span class="format-spec-name font-mono">MP4 Video (.mp4)</span>
+                  <span class="spec-tag font-mono">AUDIO EXTRACT</span>
+                </div>
+                <p class="format-spec-desc">Isolates pure audio stream from webinars and presentations with zero video frames.</p>
+                <div class="spec-footer font-mono">Audio Demux &bull; No blank video track</div>
+              </div>
             </div>
           </div>
-          <p class="footer-tagline-text">
-            <strong>Split Audio. Save Time.</strong><br>
-            A high-performance audio splitting web application engineered for podcasts, audiobooks, lectures, and studio recordings.
-          </p>
         </div>
 
-        <div class="footer-links-column">
-          <h4 class="footer-col-title">Navigation</h4>
-          <ul class="footer-links-list">
-            <li><a href="#top">Home</a></li>
-            <li><a href="#splitter">Studio Splitter</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#workflows">Workflows</a></li>
-            <li><a href="#supported-formats">Supported Formats</a></li>
-          </ul>
-        </div>
+        <!-- 5. ENGINE SETTINGS VIEW (WORKSTATION TAB) -->
+        <div class="workstation-view hidden" id="viewSettings">
+          <div class="workstation-subpage">
+            <div class="subpage-header">
+              <h2 class="subpage-title">AudioSplit Workstation Settings</h2>
+              <p class="subpage-desc font-mono">System parameters, storage paths, and engine status</p>
+            </div>
 
-        <div class="footer-formats-column">
-          <h4 class="footer-col-title">Supported Formats</h4>
-          <div class="footer-format-chips">
-            <span>MP3</span>
-            <span>WAV</span>
-            <span>M4A</span>
-            <span>AAC</span>
-            <span>FLAC</span>
-            <span>OGG</span>
-            <span>MP4</span>
+            <div class="settings-grid">
+              <div class="settings-card">
+                <h3 class="settings-card-title font-mono">FFMPEG CORE CONFIGURATION</h3>
+                <div class="settings-item">
+                  <span class="settings-item-label">Binary Status</span>
+                  <span class="settings-item-val font-mono text-cyan">Gyan.FFmpeg.Essentials (Active)</span>
+                </div>
+                <div class="settings-item">
+                  <span class="settings-item-label">Default Splitting Mode</span>
+                  <span class="settings-item-val font-mono">Fast Lossless Stream-Copy (-c:a copy)</span>
+                </div>
+                <div class="settings-item">
+                  <span class="settings-item-label">Demux Fallback</span>
+                  <span class="settings-item-val font-mono">High-Fidelity Audio Transcode Fallback</span>
+                </div>
+              </div>
+
+              <div class="settings-card">
+                <h3 class="settings-card-title font-mono">STORAGE &amp; PRIVACY POLICY</h3>
+                <div class="settings-item">
+                  <span class="settings-item-label">Maximum Upload Threshold</span>
+                  <span class="settings-item-val font-mono">500 MB</span>
+                </div>
+                <div class="settings-item">
+                  <span class="settings-item-label">Stream Chunk Buffer</span>
+                  <span class="settings-item-val font-mono">1 MB Direct-to-Disk</span>
+                </div>
+                <div class="settings-item">
+                  <span class="settings-item-label">Job Retention Lifecycle</span>
+                  <span class="settings-item-val font-mono">3600 seconds (1 Hour Auto-Purge)</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="footer-privacy-box">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-            <span><strong>100% Privacy Guarantee:</strong> Files are held in temporary storage and purged automatically after 1 hour.</span>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- Help & Keyboard Shortcuts Modal -->
+    <div class="modal-backdrop hidden" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title font-mono">WORKSTATION HELP &amp; SHORTCUTS</div>
+          <button type="button" class="modal-close-btn" id="closeHelpBtn" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-body font-mono">
+          <div class="help-section">
+            <div class="help-heading">WORKFLOW QUICKSTEPS:</div>
+            <p>1. Import audio or video (MP3, WAV, M4A, FLAC, MP4).</p>
+            <p>2. Review the live waveform, timecode ruler, and audio stream profile.</p>
+            <p>3. Select desired duration interval (5m, 10m, 15m, 20m, 30m, or Custom).</p>
+            <p>4. Click EXECUTE AUDIO SPLIT to slice without generational loss.</p>
+            <p>5. Download individual segments or complete ZIP bundle.</p>
+          </div>
+
+          <div class="help-section">
+            <div class="help-heading">WORKSTATION SHORTCUTS:</div>
+            <div class="shortcut-row">
+              <span class="kbd">Space</span>
+              <span>Play / Pause Audio Preview</span>
+            </div>
+            <div class="shortcut-row">
+              <span class="kbd">Enter</span>
+              <span>Execute Audio Split (when in settings)</span>
+            </div>
+            <div class="shortcut-row">
+              <span class="kbd">Esc</span>
+              <span>Close Help / Modal</span>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-heading">PRIVACY GUARANTEE:</div>
+            <p class="text-muted">All uploaded and generated audio files are held in temporary private job directories and purged automatically after 1 hour or upon clicking "New Session / Reset".</p>
           </div>
         </div>
-      </div>
-
-      <div class="footer-divider"></div>
-
-      <div class="footer-bottom">
-        <p class="copyright-text">
-          &copy; <span id="currentYear">2026</span> AudioSplit Pro. All rights reserved.
-        </p>
-        <p class="footer-built-with font-mono">
-          Powered by FFmpeg &bull; Stream-Copy Architecture
-        </p>
       </div>
     </div>
-  </footer>
+
+  </div>
 
   <script src="script.js"></script>
 </body>
