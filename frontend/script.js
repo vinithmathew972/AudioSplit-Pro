@@ -7,7 +7,7 @@
   'use strict';
 
   // API Base URL Resolution
-  const API_BASE = (window.location.port === '8000' || window.location.port === '')
+  const API_BASE = window.location.protocol.startsWith('http')
     ? ''
     : (window.API_BASE_URL || 'http://localhost:8000');
 
